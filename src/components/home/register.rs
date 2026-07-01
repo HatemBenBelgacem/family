@@ -4,17 +4,16 @@ use crate::backend::server_functions::benutzer_fns::register_benutzer;
 #[component]
 pub fn Register() -> Element {
     let mut username = use_signal(|| String::new());
+    let mut email = use_signal(|| String::new());
     let mut password = use_signal(|| String::new());
     let mut error_msg = use_signal(|| String::new());
 
-    let login_action = move |_| {
+    let register_action = move |_| {
         spawn(async move {
-            let result = register_benutzer(username(), password()).await;
+            let result = register_benutzer(username(), email(), password()).await;
             
             match result {
                 Ok(benutzer) => {
-                    // Login erfolgreich! Hier könntest du den User-State global setzen 
-                    // oder via Router zur Startseite navigieren.
                     error_msg.set(format!("Willkommen, {}!", benutzer.benutzername));
                 },
                 Err(e) => {
@@ -44,7 +43,7 @@ pub fn Register() -> Element {
                 value: "{password}",
                 oninput: move |e| password.set(e.value()),
             }
-            button { onclick: login_action, "Einloggen" }
+            button { onclick: register_action, "Einloggen" }
         }
     }
 }

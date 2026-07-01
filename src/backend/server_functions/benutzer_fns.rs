@@ -20,11 +20,9 @@ pub async fn register_benutzer(mut benutzer: Benutzer) -> Result<(), ServerFnErr
         return Err(ServerFnError::ServerError("Benutzername und Passwort dürfen nicht leer sein".into()));
     }
 
-    // Passwort hashen (läuft nur auf dem Server)
     let hashed_password = bcrypt::hash(&benutzer.passwort, bcrypt::DEFAULT_COST)
-        .map_err(|_| ServerFnError::ServerError("Fehler beim Hashen des Passworts".into()))?;
+        .map_err(|_| ServerFnError::ServerError("Fehler beim Hashen des Passworts".into()))?;    
     
-    // Überschreibe das Klartextpasswort mit dem Hash
     benutzer.passwort = hashed_password;
 
     crate::backend::repository::benutzer_repo::create_benutzer(&benutzer)
