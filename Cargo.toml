@@ -15,7 +15,7 @@ uuid = { version = "1.1", features = ["serde", "v4"], optional = true }
 tokio = { version = "1.0", features = ["sync", "rt", "macros"], optional = true }
 
 [features]
-default = ["web"]
+default = ["server"]
 web = ["dioxus/web"]
 desktop = ["dioxus/desktop"]
 mobile = ["dioxus/mobile"]
@@ -25,6 +25,7 @@ mobile = ["dioxus/mobile"]
 # Wird von "dx serve" / "dx build" beim Backend-Bau automatisch aktiviert
 # ==========================================
 server = [
+    "dioxus/server",
     "dep:sqlx",
     "dep:bcrypt",
     "dep:uuid",

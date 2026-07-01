@@ -8,7 +8,7 @@ use crate::backend::models::benutzer::Benutzer;
 pub async fn fetch_benutzer(id: String) -> Result<Benutzer, ServerFnError> {
     let user = crate::backend::repository::benutzer_repo::get_benutzer_by_id(&id)
         .await
-        .map_err(|e| ServerFnError::ServerError(format!("Benutzer nicht gefunden: {}", e)))?;
+        .map_err(|e| -> ServerFnError { ServerFnError::ServerError(format!("Datenbankfehler: {}", e)) })?;
         
     Ok(user)
 }
@@ -21,7 +21,7 @@ pub async fn register_benutzer(benutzername: String, email: String, passwort_kla
     }
 
     let hashed_password = bcrypt::hash(&passwort_klartext, bcrypt::DEFAULT_COST)
-        .map_err(|_| ServerFnError::ServerError("Fehler beim Hashen des Passworts".into()))?;
+        .map_err(|e| -> ServerFnError { ServerFnError::ServerError(format!("Datenbankfehler: {}", e)) })?;
     
     let benutzer = Benutzer {
         id: uuid::Uuid::new_v4().to_string(), // Beispiel für eine ID-Generierung
@@ -32,7 +32,7 @@ pub async fn register_benutzer(benutzername: String, email: String, passwort_kla
 
     crate::backend::repository::benutzer_repo::create_benutzer(&benutzer)
         .await
-        .map_err(|e| ServerFnError::ServerError(format!("Datenbankfehler: {}", e)))?;
+        .map_err(|e| -> ServerFnError { ServerFnError::ServerError(format!("Datenbankfehler: {}", e)) })?;
 
     Ok(())
 }
@@ -42,7 +42,7 @@ pub async fn login_benutzer(benutzername: String, passwort_klartext: String) -> 
     // 1. Benutzer aus der DB holen
     let benutzer_opt = crate::backend::repository::benutzer_repo::get_benutzer_by_benutzername(&benutzername)
         .await
-        .map_err(|e| ServerFnError::ServerError(format!("Datenbankfehler: {}", e)))?;
+        .map_err(|e| -> ServerFnError { ServerFnError::ServerError(format!("Datenbankfehler: {}", e)) })?;
 
     if let Some(benutzer) = benutzer_opt {
         // 2. Passwort überprüfen
