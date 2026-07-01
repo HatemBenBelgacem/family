@@ -15,15 +15,20 @@ pub async fn fetch_benutzer(id: String) -> Result<Benutzer, ServerFnError> {
 
 
 #[server]
-pub async fn register_benutzer(mut benutzer: Benutzer) -> Result<(), ServerFnError> {
-    if benutzer.benutzername.is_empty() || benutzer.passwort.is_empty() {
+pub async fn register_benutzer(benutzername: String, email: String, passwort_klartext: String) -> Result<(), ServerFnError> {
+    if benutzername.is_empty() || passwort_klartext.is_empty() {
         return Err(ServerFnError::ServerError("Benutzername und Passwort dürfen nicht leer sein".into()));
     }
 
-    let hashed_password = bcrypt::hash(&benutzer.passwort, bcrypt::DEFAULT_COST)
-        .map_err(|_| ServerFnError::ServerError("Fehler beim Hashen des Passworts".into()))?;    
+    let hashed_password = bcrypt::hash(&passwort_klartext, bcrypt::DEFAULT_COST)
+        .map_err(|_| ServerFnError::ServerError("Fehler beim Hashen des Passworts".into()))?;
     
-    benutzer.passwort = hashed_password;
+    let benutzer = Benutzer {
+        id: uuid::Uuid::new_v4().to_string(), // Beispiel für eine ID-Generierung
+        benutzername,
+        email,
+        passwort: hashed_password,
+    };
 
     crate::backend::repository::benutzer_repo::create_benutzer(&benutzer)
         .await

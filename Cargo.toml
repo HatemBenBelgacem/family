@@ -9,15 +9,10 @@ edition = "2021"
 [dependencies]
 dioxus = { version = "0.6.0", features = ["router", "fullstack"] }
 serde = { version = "1.0", features = ["derive"] }
-
-# ==========================================
-# 2. Reine Server-Abhängigkeiten
-# (Als 'optional' markiert, damit WebAssembly sie ignoriert)
-# ==========================================
 sqlx = { version = "0.8", features = ["postgres", "runtime-tokio-rustls", "uuid"], optional = true }
 bcrypt = { version = "0.15", optional = true }
-# Falls du den Uuid-Typ in Rust nutzen möchtest (siehe Hinweis unten)
 uuid = { version = "1.1", features = ["serde", "v4"], optional = true }
+tokio = { version = "1.0", features = ["sync", "rt", "macros"], optional = true }
 
 [features]
 default = ["web"]
@@ -32,7 +27,8 @@ mobile = ["dioxus/mobile"]
 server = [
     "dep:sqlx",
     "dep:bcrypt",
-    "dep:uuid"
+    "dep:uuid",
+    "dep:tokio"
 ]
 
 [profile]

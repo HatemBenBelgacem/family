@@ -13,8 +13,8 @@ pub fn Register() -> Element {
             let result = register_benutzer(username(), email(), password()).await;
             
             match result {
-                Ok(benutzer) => {
-                    error_msg.set(format!("Willkommen, {}!", benutzer.benutzername));
+                Ok(_) => {
+                    error_msg.set(format!("Willkommen, {}!", username()));
                 },
                 Err(e) => {
                     error_msg.set(e.to_string());
@@ -25,7 +25,7 @@ pub fn Register() -> Element {
 
     rsx! {
         div {
-            h2 { "Login" }
+            h2 { "Registrieren" }
 
             if !error_msg().is_empty() {
                 p { color: "red", "{error_msg}" }
@@ -37,13 +37,20 @@ pub fn Register() -> Element {
                 value: "{username}",
                 oninput: move |e| username.set(e.value()),
             }
+            // Neues Feld für die E-Mail
+            input {
+                r#type: "email",
+                placeholder: "E-Mail Adresse",
+                value: "{email}",
+                oninput: move |e| email.set(e.value()),
+            }
             input {
                 r#type: "password",
                 placeholder: "Passwort",
                 value: "{password}",
                 oninput: move |e| password.set(e.value()),
             }
-            button { onclick: register_action, "Einloggen" }
+            button { onclick: register_action, "Registrieren" }
         }
     }
 }
