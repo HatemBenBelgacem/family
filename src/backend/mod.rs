@@ -1,5 +1,5 @@
 pub mod models;
-pub mod server_fns;
+pub mod server_functions;
 
 // Das Repository wird Client-seitig (WASM) gar nicht erst kompiliert, 
 // da es sqlx enthält, was im Browser nicht funktioniert.

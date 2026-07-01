@@ -1,10 +1,5 @@
 use dioxus::prelude::*;
 
-#[derive(Debug, Clone, Routable, PartialEq)]
-#[rustfmt::skip]
-enum Route {
- 
-}
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
@@ -24,5 +19,14 @@ fn App() -> Element {
 }
 
 
+#[derive(Debug, Clone, Routable, PartialEq)]
+#[rustfmt::skip]
+enum Route {
+    #[route("/register")]
+    RegisterPage{},
+    #[route("/login")]
+    LoginPage{},
 
+   
+}
 
