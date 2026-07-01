@@ -9,9 +9,8 @@ static DB : OnceCell<Pool<Postgres>> = OnceCell::const_new(); // Typ auf Postgre
 
 #[cfg(feature = "server")]
 async fn db() -> Pool<Postgres> {
-  // Verbindung zur Postgres-Datenbank herstellen.
-  // Es ist Best Practice, die URL aus einer Umgebungsvariable zu laden.
-  // Beispiel URL: "postgres://user:password@localhost/perman_db"
+  dotenvy::dotenv().ok();
+  
   let database_url = std::env::var("DATABASE_URL")
       .expect("DATABASE_URL muss gesetzt sein");
 

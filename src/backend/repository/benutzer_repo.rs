@@ -9,7 +9,7 @@ pub async fn get_benutzer_by_benutzername(benutzername: &str) -> Result<Option<B
     let pool = get_db().await;
     
     let benutzer = sqlx::query_as::<_, Benutzer>(
-        "SELECT * FROM benutzer WHERE benutzername = $1"
+        "SELECT * FROM benutzer WHERE benutzername = $1::uuid"
     )
     .bind(benutzername)
     .fetch_optional(pool) // fetch_optional, da der Benutzer evtl. nicht existiert
@@ -26,7 +26,7 @@ pub async fn create_benutzer(benutzer: &Benutzer) -> Result<(), sqlx::Error> {
     sqlx::query(
         r#"
         INSERT INTO benutzer (id, benutzername, email, passwort)
-        VALUES ($1, $2, $3, $4)
+        VALUES ($1::uuid, $2, $3, $4)
         "#
     )
     .bind(&benutzer.id)
@@ -44,7 +44,7 @@ pub async fn get_benutzer_by_id(id: &str) -> Result<Benutzer, sqlx::Error> {
     let pool = get_db().await;
     
     let benutzer = sqlx::query_as::<_, Benutzer>(
-        "SELECT * FROM benutzer WHERE id = $1"
+        "SELECT * FROM benutzer WHERE id = $1::uuid"
     )
     .bind(id)
     .fetch_one(pool)
