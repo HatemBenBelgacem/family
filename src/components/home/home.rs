@@ -1,11 +1,13 @@
+use dioxus::prelude::*;
+use crate::Route;
+
 #[component]
-fn Home() -> Element {
+pub fn Home() -> Element {
     rsx! {
         div {
             h1 { "Willkommen zur Family App!" }
             p { "Bitte wähle eine Option:" }
 
-            // Navigation mit der Link-Komponente
             ul {
                 li {
                     Link { to: Route::Login {}, "Zum Login" }

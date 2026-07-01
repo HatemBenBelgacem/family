@@ -2,6 +2,11 @@ use dioxus::prelude::*;
 
 mod backend;
 mod db;
+mod components;
+
+use components::home::home::Home;
+use components::home::login::Login;
+use components::home::register::Register;
 
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
@@ -25,13 +30,11 @@ fn App() -> Element {
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
 enum Route {
-    #[route(/)]
+    #[route("/")]
     Home{},
     #[route("/register")]
     Register{},
     #[route("/login")]
     Login{},
-
-   
 }
 
