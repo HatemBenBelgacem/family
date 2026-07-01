@@ -6,7 +6,7 @@ use sqlx::FromRow;
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[cfg_attr(feature = "server", derive(FromRow))]
 pub struct Benutzer {
-    pub id: String,
+    pub id: uuid::Uuid,
     pub benutzername: String,
     pub email: String,
     pub passwort: String,

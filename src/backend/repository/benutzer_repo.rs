@@ -9,7 +9,7 @@ pub async fn get_benutzer_by_benutzername(benutzername: &str) -> Result<Option<B
     let pool = get_db().await;
     
     let benutzer = sqlx::query_as::<_, Benutzer>(
-        "SELECT * FROM benutzer WHERE benutzername = $1::uuid"
+        "SELECT * FROM benutzer WHERE benutzername = $1"
     )
     .bind(benutzername)
     .fetch_optional(pool) // fetch_optional, da der Benutzer evtl. nicht existiert
