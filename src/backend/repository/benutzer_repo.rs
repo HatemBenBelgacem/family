@@ -1,7 +1,7 @@
 #[cfg(feature = "server")]
 use crate::backend::models::benutzer::Benutzer;
 #[cfg(feature = "server")]
-use crate::db::get_db;
+use crate::backend::db::get_db;
 
 
 #[cfg(feature = "server")]

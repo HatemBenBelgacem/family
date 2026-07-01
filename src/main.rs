@@ -1,7 +1,6 @@
 use dioxus::prelude::*;
 
 mod backend;
-mod db;
 mod components;
 
 use components::home::home::Home;

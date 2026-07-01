@@ -1693,6 +1693,7 @@ dependencies = [
  "chrono",
  "dioxus",
  "dotenv",
+ "dotenvy",
  "num-format",
  "serde",
  "sqlx",

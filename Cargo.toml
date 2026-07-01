@@ -17,6 +17,7 @@ num-format = "0.4"
 dotenv = "0.15"
 bcrypt = { version = "0.15", optional = true }
 uuid = { version = "1.10", features = ["v4"], optional = true }
+dotenvy = "0.15.7"
 
 
 [features]
