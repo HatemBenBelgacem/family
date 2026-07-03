@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 use crate::backend::server_functions::benutzer_fns::register_benutzer;
+use crate::Route;
 
 #[component]
 pub fn Register() -> Element {
@@ -24,33 +25,61 @@ pub fn Register() -> Element {
     };
 
     rsx! {
-        div {
-            h2 { "Registrieren" }
+        div { class: "d-flex justify-content-center align-items-center vh-100 bg-light",
+            div {
+                class: "border rounded p-4 shadow-sm bg-white",
+                style: "width: 100%; max-width: 400px;",
+                div {
+                    h2 { "Registrieren" }
 
-            if !error_msg().is_empty() {
-                p { color: "red", "{error_msg}" }
-            }
+                    if !error_msg().is_empty() {
+                        p { color: "red", "{error_msg}" }
+                    }
 
-            input {
-                r#type: "text",
-                placeholder: "Benutzername",
-                value: "{username}",
-                oninput: move |e| username.set(e.value()),
+                    div { class: "mb-3",
+                        input {
+                            class: "form-control",
+                            r#type: "text",
+                            placeholder: "Benutzername",
+                            value: "{username}",
+                            oninput: move |e| username.set(e.value()),
+                        }
+                    }
+
+                    div { class: "mb-3",
+                        input {
+                            class: "form-control",
+                            r#type: "email",
+                            placeholder: "E-Mail Adresse",
+                            value: "{email}",
+                            oninput: move |e| email.set(e.value()),
+                        }
+                    }
+                    div { class: "mb-3",
+                        input {
+                            class: "form-control",
+                            r#type: "password",
+                            placeholder: "Passwort",
+                            value: "{password}",
+                            oninput: move |e| password.set(e.value()),
+                        }
+                    }
+                    div { class: "mb-3",
+                        button {
+                            class: "btn btn-outline-secondary",
+                            onclick: register_action,
+                            "Registrieren"
+                        }
+                    }
+                    div { class: "mb-3",
+                        li {
+                            Link { to: Route::Login {}, "Login" }
+                        }
+                    }
+                
+                }
             }
-            // Neues Feld für die E-Mail
-            input {
-                r#type: "email",
-                placeholder: "E-Mail Adresse",
-                value: "{email}",
-                oninput: move |e| email.set(e.value()),
-            }
-            input {
-                r#type: "password",
-                placeholder: "Passwort",
-                value: "{password}",
-                oninput: move |e| password.set(e.value()),
-            }
-            button { onclick: register_action, "Registrieren" }
         }
+
     }
 }

@@ -6,6 +6,7 @@ mod components;
 use components::home::home::Home;
 use components::home::login::Login;
 use components::home::register::Register;
+use components::produkt::create::Create;
 
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
@@ -35,5 +36,7 @@ enum Route {
     Register{},
     #[route("/login")]
     Login{},
+    #[route("/einkauf")]
+    Create{},
 }
 

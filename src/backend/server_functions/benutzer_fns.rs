@@ -24,7 +24,7 @@ pub async fn register_benutzer(benutzername: String, email: String, passwort_kla
         .map_err(|e| -> ServerFnError { ServerFnError::ServerError(format!("Datenbankfehler: {}", e)) })?;
     
     let benutzer = Benutzer {
-        id: uuid::Uuid::new_v4().to_string(), // Beispiel für eine ID-Generierung
+        id: uuid::Uuid::new_v4(), // Beispiel für eine ID-Generierung
         benutzername,
         email,
         passwort: hashed_password,
