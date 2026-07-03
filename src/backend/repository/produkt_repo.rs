@@ -51,3 +51,16 @@ pub async fn get_produkt_by_id(id: &str) -> Result<Produkt, sqlx::Error> {
 
     Ok(produkt)
 }
+
+#[cfg(feature = "server")]
+pub async fn produktliste() -> Result<Vec<Produkt>, sqlx::Error>{
+    let pool = get_db().await;
+
+    let produktliste = sqlx::query_as::<_, Produkt>(
+        "SELECT * FROM produkt"
+    )
+    .fetch_all(pool)
+    .await?;
+
+    Ok(produktliste)
+}

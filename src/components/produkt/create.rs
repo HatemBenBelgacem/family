@@ -15,6 +15,7 @@ pub fn Create() -> Element {
             match result {
                 Ok(_) => {
                     error_msg.set(format!("Willkommen, {}!", bezeichnung()));
+                    bezeichnung.set(String::new());
                 },
                 Err(e) => {
                     error_msg.set(e.to_string());
@@ -24,10 +25,10 @@ pub fn Create() -> Element {
     };
 
     rsx! {
-        div { class: "d-flex justify-content-center align-items-center vh-100 bg-light",
+        div { class: " bg-light",
             div {
                 class: "border rounded p-4 shadow-sm bg-white",
-                style: "width: 100%; max-width: 400px;",
+                style: "width: 100%;",
                 div {
                     h2 { "Einkaufsliste" }
 
@@ -45,11 +46,6 @@ pub fn Create() -> Element {
                             class: "btn btn-outline-secondary",
                             onclick: register_action,
                             "Speichern"
-                        }
-                    }
-                    div { class: "mb-3",
-                        li {
-                            Link { to: Route::Login {}, "Login" }
                         }
                     }
                 
