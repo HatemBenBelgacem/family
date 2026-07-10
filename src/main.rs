@@ -9,9 +9,13 @@ use components::home::register::Register;
 use components::produkt::einkaufsliste::Einkaufsliste;
 
 
-const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
-const HEADER_SVG: Asset = asset!("/assets/header.svg");
+
+#[derive(Clone, Default, PartialEq)]
+pub struct BenutzerStatus {
+    pub ist_eingeloggt: bool,
+    pub benutzername: Option<String>,
+}
 
 fn main() {
     dioxus::launch(App);
@@ -19,9 +23,11 @@ fn main() {
 
 #[component]
 fn App() -> Element {
+
+    use_context_provider(|| Signal::new(BenutzerStatus::default()));
+
     rsx! {
-        document::Link { rel: "icon", href: FAVICON }
-        document::Link { rel: "stylesheet", href: MAIN_CSS }
+
         Router::<Route> {}
     }
 }

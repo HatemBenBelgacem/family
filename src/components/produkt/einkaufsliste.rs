@@ -10,8 +10,6 @@ pub fn Einkaufsliste() -> Element {
     
     rsx! {
         Create {}
-
-        // Wir werten den aktuellen Zustand der Resource aus
         {
             match produktliste() {
                 // Zustand 1: Die Daten laden noch
@@ -27,11 +25,11 @@ pub fn Einkaufsliste() -> Element {
                 // Zustand 3: Erfolgreich! 'produkte' ist jetzt deine Liste (z.B. Vec<Produkt>)
                 Some(Ok(produkte)) => rsx! {
                     for p in produkte {
-                        div { class: "card", key: "{p.id}",
+                        div { class: "card mx-5", key: "{p.id}",
                             div { class: "card-body",
                                 "{p.bezeichnung}"
                                 input {
-                                    class: "form-check-input",
+                                    class: "form-check-input float-end",
                                     r#type: "checkbox",
                                     value: "true",
                                     "{p.eingekauft}"

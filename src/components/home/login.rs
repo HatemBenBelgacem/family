@@ -1,12 +1,14 @@
 use dioxus::prelude::*;
 use crate::backend::server_functions::benutzer_fns::login_benutzer;
-use crate::Route;
+use crate::{Route, BenutzerStatus};
 
 #[component]
 pub fn Login() -> Element {
     let mut username = use_signal(|| String::new());
     let mut password = use_signal(|| String::new());
     let mut error_msg = use_signal(|| String::new());
+
+    let mut status = use_context::<Signal<BenutzerStatus>>();
     let nav = use_navigator();
 
     let login_action = move |_| {
@@ -18,6 +20,10 @@ pub fn Login() -> Element {
                     // Login erfolgreich! Hier könntest du den User-State global setzen 
                     // oder via Router zur Startseite navigieren.
                     error_msg.set(format!("Willkommen, {}!", benutzer.benutzername));
+                    status.set(BenutzerStatus {
+                        ist_eingeloggt: true,
+                        benutzername: Some("Hatem".to_string()), 
+                    });
                     nav.replace(Route::Einkaufsliste {  });
                 },
                 Err(e) => {
