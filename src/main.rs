@@ -7,6 +7,7 @@ use components::home::home::Home;
 use components::home::login::Login;
 use components::home::register::Register;
 use components::produkt::einkaufsliste::Einkaufsliste;
+use components::geruest::app_layout::AppLayout;
 
 
 const MAIN_CSS: Asset = asset!("/assets/main.css");
@@ -36,13 +37,15 @@ fn App() -> Element {
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
 enum Route {
-    #[route("/")]
-    Home{},
     #[route("/register")]
     Register{},
     #[route("/login")]
     Login{},
-    #[route("/einkauf")]
-    Einkaufsliste{},
+    
+    #[layout(AppLayout)]
+        #[route("/")]
+        Home{},
+        #[route("/einkauf")]
+        Einkaufsliste{}
 }
 

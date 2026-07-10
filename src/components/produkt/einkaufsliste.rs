@@ -9,7 +9,6 @@ pub fn Einkaufsliste() -> Element {
     let produktliste = use_resource(move || async move { alle_produkte().await });
     
     rsx! {
-        Create {}
         {
             match produktliste() {
                 // Zustand 1: Die Daten laden noch
@@ -25,7 +24,7 @@ pub fn Einkaufsliste() -> Element {
                 // Zustand 3: Erfolgreich! 'produkte' ist jetzt deine Liste (z.B. Vec<Produkt>)
                 Some(Ok(produkte)) => rsx! {
                     for p in produkte {
-                        div { class: "card mx-5", key: "{p.id}",
+                        div { class: "card", key: "{p.id}",
                             div { class: "card-body",
                                 "{p.bezeichnung}"
                                 input {
