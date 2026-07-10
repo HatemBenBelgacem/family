@@ -5,6 +5,7 @@ use crate::components::produkt::einkaufsliste::Einkaufsliste;
 
 #[component]
 pub fn AppLayout() -> Element {
+    use_context_provider(|| Signal::new(0usize));
     rsx!{
         div { class: "container-fluid p-0",
             div { class: "", Header {} }

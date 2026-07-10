@@ -1,12 +1,13 @@
 use dioxus::prelude::*;
 use crate::backend::server_functions::produkt_fns::create_produkt;
-use crate::Route;
+
 
 #[component]
 pub fn Create() -> Element {
     let mut bezeichnung = use_signal(|| String::new());
     let mut eingekauft = use_signal(|| false);
     let mut error_msg = use_signal(|| String::new());
+    let mut reload_trigger = consume_context::<Signal<usize>>();
 
     let register_action = move |_| {
         spawn(async move {
@@ -15,6 +16,7 @@ pub fn Create() -> Element {
             match result {
                 Ok(_) => {
                     error_msg.set(format!("Willkommen, {}!", bezeichnung()));
+                    reload_trigger += 1;
                     bezeichnung.set(String::new());
                 },
                 Err(e) => {

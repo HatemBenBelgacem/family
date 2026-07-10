@@ -39,6 +39,20 @@ pub async fn create_produkt(produkt: &Produkt) -> Result<(), sqlx::Error> {
 }
 
 #[cfg(feature = "server")]
+pub async fn delete_produkt(id:&str) -> Result<Produkt, sqlx::Error> {
+    let pool = get_db().await;
+
+    let produkt = sqlx::query_as::<_, Produkt>(
+        "DELETE FROM produkt WHERE id = $1"
+    )
+    .bind(id)
+    .fetch_one(pool)
+    .await?;
+
+    Ok(produkt)
+}
+
+#[cfg(feature = "server")]
 pub async fn get_produkt_by_id(id: &str) -> Result<Produkt, sqlx::Error> {
     let pool = get_db().await;
     
