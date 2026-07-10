@@ -28,10 +28,18 @@ pub fn Einkaufsliste() -> Element {
                 Some(Ok(produkte)) => rsx! {
                     for p in produkte {
                         div { class: "card", key: "{p.id}",
-                            div { class: "card-body", "{p.bezeichnung}" }
+                            div { class: "card-body",
+                                "{p.bezeichnung}"
+                                input {
+                                    class: "form-check-input",
+                                    r#type: "checkbox",
+                                    value: "true",
+                                    "{p.eingekauft}"
+                                }
+
+                            }
 
                         }
-
                     }
                 },
             }

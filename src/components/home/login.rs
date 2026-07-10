@@ -7,6 +7,7 @@ pub fn Login() -> Element {
     let mut username = use_signal(|| String::new());
     let mut password = use_signal(|| String::new());
     let mut error_msg = use_signal(|| String::new());
+    let nav = use_navigator();
 
     let login_action = move |_| {
         spawn(async move {
@@ -17,6 +18,7 @@ pub fn Login() -> Element {
                     // Login erfolgreich! Hier könntest du den User-State global setzen 
                     // oder via Router zur Startseite navigieren.
                     error_msg.set(format!("Willkommen, {}!", benutzer.benutzername));
+                    nav.replace(Route::Einkaufsliste {  });
                 },
                 Err(e) => {
                     error_msg.set(e.to_string());
