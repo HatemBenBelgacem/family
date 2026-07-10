@@ -39,17 +39,16 @@ pub async fn create_produkt(produkt: &Produkt) -> Result<(), sqlx::Error> {
 }
 
 #[cfg(feature = "server")]
-pub async fn delete_produkt(id:&str) -> Result<Produkt, sqlx::Error> {
+pub async fn delete_produkt(id: &str) -> Result<(), sqlx::Error> { // Wir geben () statt Produkt zurück
     let pool = get_db().await;
 
-    let produkt = sqlx::query_as::<_, Produkt>(
-        "DELETE FROM produkt WHERE id = $1"
-    )
-    .bind(id)
-    .fetch_one(pool)
-    .await?;
+    // Nur query statt query_as
+    sqlx::query("DELETE FROM produkt WHERE id = $1")
+        .bind(id)
+        .execute(pool) // execute verlangt keine Datenzeilen als Antwort
+        .await?;
 
-    Ok(produkt)
+    Ok(())
 }
 
 #[cfg(feature = "server")]
