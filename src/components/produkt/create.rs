@@ -25,7 +25,7 @@ pub fn Create() -> Element {
     };
 
     rsx! {
-        div { class: " bg-light",
+        div { class: " bg-light mx-5",
             div {
                 class: "border rounded p-4 shadow-sm bg-white",
                 style: "width: 100%;",
