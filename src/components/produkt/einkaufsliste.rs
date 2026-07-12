@@ -6,7 +6,7 @@ use crate::backend::models::produkt::Produkt;
 
 #[component]
 pub fn Einkaufsliste() -> Element {
-    // Die Resource startet den asynchronen Aufruf
+    
     let mut reload_trigger = consume_context::<Signal<usize>>();
     
     let produktliste = use_resource(move || async move { 
@@ -21,7 +21,7 @@ pub fn Einkaufsliste() -> Element {
                 Some(produkte) => {
                     rsx! {
                         for produkt in produkte {
-                            ProduktEintrag { key: "produkt.id", produkt: produkt.clone(), produktliste }
+                            ProduktEintrag { key: "{produkt.id}", produkt: produkt.clone(), produktliste }
                         }
                     }
                 }
@@ -48,7 +48,7 @@ fn ProduktEintrag(produkt: Produkt, mut produktliste: Resource<Vec<Produkt>>) ->
     };
 
     rsx! {
-        div { class: "card mb-2", // mb-2 sorgt für eine kleine Lücke zwischen den Karten
+        div { class: "card mb-1",
             // d-flex und justify-content-between schiebt den Text nach links und den Löschen-Button nach rechts!
             div { class: "card-body d-flex align-items-center justify-content-between",
 
