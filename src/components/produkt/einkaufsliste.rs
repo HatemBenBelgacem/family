@@ -14,8 +14,6 @@ pub fn Einkaufsliste() -> Element {
         
     });
     
-    
-    
     rsx! {
         {
             match &*produktliste.read() {
@@ -24,9 +22,10 @@ pub fn Einkaufsliste() -> Element {
                         for produkt in produkte {
                             div { class: "card", key: "{produkt.id}",
                                 div { class: "card-body",
+                                    input { class: "form-check-input me-3", r#type: "checkbox" }
                                     "{produkt.bezeichnung}"
-                                    input { class: "form-check-input float-end", r#type: "checkbox" }
                                     Delete { produkt: produktliste, id: produkt.id.clone() }
+
                                 }
 
                             }

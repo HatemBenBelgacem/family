@@ -43,8 +43,8 @@ pub async fn create_produkt(bezeichnung: String, eingekauft: bool) -> Result<(),
 }
 
 #[server]
-pub async fn delete_produkt(id: String) -> Result<(), ServerFnError> {
-    crate::backend::repository::produkt_repo::delete_produkt(&id)
+pub async fn delete_produkt(id: uuid::Uuid) -> Result<(), ServerFnError> {
+    crate::backend::repository::produkt_repo::delete_produkt(id)
         .await
         .map_err(|e| -> ServerFnError { ServerFnError::ServerError(format!("Datenbankfehler: {}", e)) })?;
 

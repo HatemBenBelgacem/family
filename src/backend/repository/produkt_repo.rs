@@ -39,7 +39,7 @@ pub async fn create_produkt(produkt: &Produkt) -> Result<(), sqlx::Error> {
 }
 
 #[cfg(feature = "server")]
-pub async fn delete_produkt(id: &str) -> Result<(), sqlx::Error> { // Wir geben () statt Produkt zurück
+pub async fn delete_produkt(id: uuid::Uuid) -> Result<(), sqlx::Error> { // Wir geben () statt Produkt zurück
     let pool = get_db().await;
 
     // Nur query statt query_as
